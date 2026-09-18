@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="UK retail product comparison and resale analytics platform in development." />
+  <title>Resale Opportunity Scanner</title>
+  <style>
+    :root{
+      --bg:#0b0d10; --card:#141820; --muted:#9da7b3; --text:#f5f7fa;
+      --line:#252b35; --accent:#8dd8a6; --accent2:#80bfff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,#090b0e,#10141a); color:var(--text);
+    }
+    .wrap{max-width:980px;margin:0 auto;padding:64px 24px}
+    .badge{
+      display:inline-block;padding:7px 11px;border:1px solid var(--line);
+      border-radius:999px;color:var(--accent);background:#11161a;font-size:13px
+    }
+    h1{font-size:clamp(42px,7vw,72px);line-height:1.02;margin:20px 0 20px;letter-spacing:-2px}
+    .lead{font-size:20px;line-height:1.6;color:#c4ccd5;max-width:780px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:44px 0}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+    .card h3{margin:0 0 10px;font-size:18px}
+    .card p{margin:0;color:var(--muted);line-height:1.55}
+    .section{margin-top:56px}
+    h2{font-size:28px;margin-bottom:14px}
+    ul{color:#c4ccd5;line-height:1.8;padding-left:22px}
+    .status{
+      margin-top:28px;padding:20px;border-radius:16px;border:1px solid #21412c;
+      background:#102117;color:#c8f6d6
+    }
+    .footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:#7f8995;font-size:13px;line-height:1.6}
+    a{color:var(--accent2)}
+    @media(max-width:760px){.grid{grid-template-columns:1fr} .wrap{padding-top:40px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <span class="badge">In development · UK</span>
+    <h1>Resale Opportunity Scanner</h1>
+    <p class="lead">
+      A product comparison and resale analytics project designed to monitor pricing and availability
+      from legitimate retailers, match products to resale-market listings, and highlight potential
+      price differences for manual review.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Trusted retail sourcing</h3>
+        <p>Focuses on established and authorised retailers rather than unknown marketplace sellers.</p>
+      </div>
+      <div class="card">
+        <h3>Price comparison</h3>
+        <p>Compares current retail pricing with resale-market information at product and variant level where available.</p>
+      </div>
+      <div class="card">
+        <h3>Opportunity analytics</h3>
+        <p>Estimates fees, margins and ROI so products can be prioritised for manual purchasing decisions.</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <h2>What the platform is being built to do</h2>
+      <ul>
+        <li>Monitor products, sale prices and availability from legitimate UK retailers.</li>
+        <li>Match products using identifiers such as SKU, style code or GTIN where available.</li>
+        <li>Compare retailer pricing with resale-market bids, asks and other market data.</li>
+        <li>Estimate transaction fees, acquisition cost, potential margin and return on investment.</li>
+        <li>Surface high-priority opportunities in a simple comparison dashboard.</li>
+        <li>Direct users to the original retailer product page for manual review and purchase.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Data approach</h2>
+      <p class="lead" style="font-size:17px">
+        The project is intended to use official APIs, authorised affiliate/product feeds and other
+        permitted structured retailer data wherever available. Integrations are added only where
+        access and usage terms permit.
+      </p>
+    </section>
+
+    <div class="status">
+      <strong>Current status:</strong> prototype / integration stage. Retailer and resale-market
+      data connections are being evaluated and requested.
+    </div>
+
+    <footer class="footer">
+      <strong>Disclosure:</strong> This site is an independent analytics project and is not affiliated
+      with or endorsed by StockX or any retailer mentioned through future integrations. Product availability,
+      prices and resale values can change. Any purchasing decision remains manual.
+    </footer>
+  </main>
+</body>
+</html>
