@@ -197,6 +197,19 @@ def scan(offers, comps, rules, now=None):
         if old is None or ((row['acquisition_cost'] or float('inf')) < (old['acquisition_cost'] or float('inf'))):
             unique[row['id']] = row
     priority = {'BUY_REVIEW': 0, 'WATCH': 1, 'REJECT': 2}
-    return sorted(unique.values(), key=lambda x: (priority[x['verdict']],
-                                                  -((x['net_profit'] or 0) - (x['risk_score'] or 0) * 0.1),
-                                                  -(x['roi_percent'] or 0)))
+    ranked = sorted(unique.values(), key=lambda x: (priority[x['verdict']],
+                                                    -((x['net_profit'] or 0) - (x['risk_score'] or 0) * 0.1),
+                                                    -(x['roi_percent'] or 0)))
+    # Only shortlist suggestions that together fit the planning budget. No money is reserved/spent.
+    allocated = D(0)
+    for row in ranked:
+        row['selected_within_budget'] = False
+        if row['verdict'] != 'BUY_REVIEW':
+            continue
+        if allocated + D(str(row['acquisition_cost'])) > rules.capital:
+            row['verdict'] = 'WATCH'
+            row['reasons'].append('Portfolio shortlist exceeds £100 available capital; reconsider after sales')
+        else:
+            allocated += D(str(row['acquisition_cost']))
+            row['selected_within_budget'] = True
+    return ranked
