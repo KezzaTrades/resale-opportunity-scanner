@@ -1,0 +1,39 @@
+name: Resale scan (no buying)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 8,18 * * *'
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test scanner (no third-party packages)
+        run: python -m unittest discover -s tests -v
+      - name: Restore alert deduplication cache
+        uses: actions/cache@v4
+        with:
+          path: .runtime/alerts-state.json
+          key: resale-alerts-${{ github.run_id }}
+          restore-keys: resale-alerts-
+      - name: Scan authorised feeds and run private alerting
+        env:
+          EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
+          EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
+          AWIN_FEED_URL: ${{ secrets.AWIN_FEED_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SALES_DATA_B64: ${{ secrets.SALES_DATA_B64 }}
+        run: python -m scanner.cli --telegram
+      - name: Brief scan totals (no private listings)
+        if: always()
+        run: |
+          if test -f .runtime/results.json; then
+            python -c "import json; x=json.load(open('.runtime/results.json')); print('Evaluated:', x['offers_evaluated'], '| Review candidates:', sum(o['verdict']=='BUY_REVIEW' for o in x['opportunities']), '| Source issues:', len(x['source_errors']))"
+          fi
