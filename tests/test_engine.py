@@ -115,6 +115,20 @@ class EngineTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             Rules.from_mapping({'seller_fee_percent': 98})
 
+    def test_shortlist_respects_total_capital(self):
+        o, sales = example()
+        offers = []
+        all_sales = []
+        for i in range(6):
+            row = dict(o, product_id=f'ITEM-{i}', url=f'https://shop.example/{i}', price='40')
+            offers.append(row)
+            for item in sales:
+                all_sales.append(dict(item, product_id=f'ITEM-{i}', sold_price='100'))
+        results = scan(offers, all_sales, Rules(), NOW)
+        shortlisted = [r for r in results if r['verdict'] == 'BUY_REVIEW']
+        self.assertEqual(len(shortlisted), 2)
+        self.assertLessEqual(sum(r['acquisition_cost'] for r in shortlisted), 100)
+
     def test_telegram_never_sends_watch(self):
         import tempfile
         with tempfile.TemporaryDirectory() as directory:
