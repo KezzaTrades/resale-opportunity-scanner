@@ -9,3 +9,7 @@ The project is in development and is intended to use official APIs, authorised p
 Publish this repository from the `main` branch / root folder in:
 
 **Settings → Pages → Build and deployment → Deploy from a branch → main / root**
+
+## Functional scanning engine
+
+See [ENGINE.md](ENGINE.md) for the implemented Python scanner, £100 portfolio budget, resale-profit model, official API integrations, security limits, data templates, test commands and Telegram setup. The landing page is separate from the scan engine.
