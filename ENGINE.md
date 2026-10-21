@@ -8,7 +8,7 @@ A working **manual-purchase-only** research system for the [Resale Opportunity S
 - Exact product ID, condition and variant segregation; keyword-only eBay title matches are flagged **unverified** and are **never** automatic high-confidence buy candidates.
 - Calculate all-in acquisition cost, estimated platform seller fees, selling postage, packaging, additional expenses and reserve for returns. Compute lower-quartile completed-sale benchmark, breakeven, estimated net profit, ROI, margin and a price-dispersion risk indicator.
 - Match only **recent, documented, completed sales** (the user must supply evidence, or an independently authorised sold-sales feed must be added). Asking prices, MSRP and eBay active listings are NEVER used as verified sales.
-- `BUY_REVIEW`, `WATCH`, `REJECT` verdicts, per-item reasons, ranked JSON report, private Telegram alerts and de-duplication. Never executes a purchase.
+- `BUY_REVIEW`, `WATCH`, `REJECT` verdicts, per-item reasons, ranked JSON report, private Telegram alerts and de-duplication. Shortlists at most £100 of combined acquisition costs. Never executes a purchase.
 - Scheduled GitHub Actions scanner, twice daily 08:17 and 18:17 UTC (scheduled workflows run only on the GitHub default branch). Runs don't automatically commit deals to a public repository.
 
 ## Start locally
@@ -56,13 +56,13 @@ Completed sale rows must have `status=sold`, `evidence_type=confirmed_transactio
 - Estimated net profit = benchmark − acquisition − platform % and fixed fees − outbound shipping − packaging − return reserve − other fixed costs.
 - ROI % = net profit / acquisition × 100. Margin % = net profit / resale value × 100.
 - Breakeven price solves for a sale price that covers both percentage-based costs and fixed costs.
-- Initial minimums: **£100 capital; £50 maximum acquisition including shipping; £8 minimum estimated net profit; 30% minimum ROI; at least three recent documented completed sales**.
+- Initial minimums: **£100 combined shortlist capital; £50 maximum acquisition including shipping; £8 minimum estimated net profit; 30% minimum ROI; at least three recent documented completed sales**.
 
 The engine **never buys automatically**. The `BUY_REVIEW` classification is not an instruction to buy; check authenticity, stock, condition, title variations, fee tiers, delivery, payment restrictions, demand and returns first.
 
 ## Test and deployment
 
-`python -m unittest discover -s tests -v` covers budget, postage, fee calculation, stale/incorrect/duplicated comps, currency, identity, variant, source trust, no-history, duplicate opportunities, eBay matching and alert safety.
+`python -m unittest discover -s tests -v` covers budget, postage, fee calculation, stale/incorrect/duplicated comps, currency, identity, variant, source trust, no-history, duplicate opportunities, eBay matching, portfolio allocation and alert safety.
 
 The GitHub Actions workflow includes a scheduled scan and manual dispatch. It tests before scanning, and caches hashed alert identifiers between runs. It does not upload private deal lists as public artifacts. The schedule on a feature branch does not run until the workflow is merged to `main`. GitHub Actions usage may be billable depending on account plan and usage; monitor limits and disable the schedule if necessary.
 
