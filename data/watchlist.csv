@@ -1,0 +1,4 @@
+query,product_id,required_token,variant,condition,category
+LEGO 75379,LEGO-75379,75379,standard,new,LEGO
+LEGO 76924,LEGO-76924,76924,standard,new,LEGO
+Xbox wireless controller 1914,XBOX-1914,1914,standard,new,gaming

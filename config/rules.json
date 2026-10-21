@@ -1,0 +1,14 @@
+{
+  "capital": 100,
+  "max_purchase": 50,
+  "min_profit": 8,
+  "min_roi_percent": 30,
+  "min_sold": 3,
+  "max_sold_age_days": 60,
+  "seller_fee_percent": 12.8,
+  "seller_fee_fixed": 0.30,
+  "outbound_postage": 3.49,
+  "packaging": 0.35,
+  "return_reserve_percent": 5,
+  "additional_fixed_cost": 0
+}
